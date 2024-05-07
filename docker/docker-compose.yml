@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  sso:
+    image: quay.io/keycloak/keycloak:22.0.4
+    ports:
+      - "8070:8070"
+    depends_on:
+      - db
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://db:5432/keycloak
+      KC_DB_USERNAME: root
+      KC_DB_PASSWORD: root
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_FEATURES: token-exchange, admin-fine-grained-auth
+    entrypoint: "/opt/keycloak/bin/kc.sh start-dev --http-port 8070 --db=postgres"
+    # entrypoint: "/opt/keycloak/bin/kc.sh start-dev --import-realm --http-port 8070 --db=file"
+
+  db:
+    image: postgres:latest
+    environment:
+      PGDATA: /data/postgres
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - ./data/postgres:/data/postgres
+    ports:
+      - "5432:5432"
