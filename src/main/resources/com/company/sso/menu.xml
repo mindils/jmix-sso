@@ -3,6 +3,7 @@
 
     <menu id="application" title="msg://com.company.sso/menu.application.title" opened="true">
         <item view="User.list" title="msg://com.company.sso.view.user/UserListView.title"/>
+      <item view="ExampleEntity.list" title="msg://com.company.sso.view.exampleentity/exampleEntityListView.title"/>
     </menu>
 
 </menu-config>
